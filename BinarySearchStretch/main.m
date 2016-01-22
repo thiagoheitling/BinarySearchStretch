@@ -12,13 +12,13 @@ NSArray *binarySearchStretch(int inputTarget, NSArray *inputSortedArray) {
     
     NSArray *sortedArray = inputSortedArray;
     NSArray *targetIndexAndNumberOfAppearances = [[NSArray alloc]init];
-    NSNumber *numberOfAppearances = [NSNumber numberWithInt:0];
-    
+
     int target = inputTarget;
     int min = 0;
     int max = (int)[sortedArray count];
     int midPointIndex;
     int appearances = 0;
+    int result;
     
     while((min + 1) < max) {
         midPointIndex = (min + max)/2;
@@ -30,23 +30,20 @@ NSArray *binarySearchStretch(int inputTarget, NSArray *inputSortedArray) {
         }
     }
     
-    NSNumber *result;
-    
     if (target == [sortedArray[min]intValue]) {
         int i = min;
         while (target == [[sortedArray objectAtIndex:i]intValue]) {
             appearances++;
             i--;
         }
-        result = [NSNumber numberWithInt:(min - appearances + 1)];
-        numberOfAppearances = [NSNumber numberWithInt:appearances];
+        result = min - appearances + 1;
     }
     else {
-        result = [NSNumber numberWithInt:0];
-        numberOfAppearances = [NSNumber numberWithInt:-1];
+        result = 0;
+        appearances = -1;
     }
  
-    targetIndexAndNumberOfAppearances = @[result, numberOfAppearances];
+    targetIndexAndNumberOfAppearances = @[[NSNumber numberWithInt:result], [NSNumber numberWithInt:appearances]];
     NSLog(@"{%@, %@}", targetIndexAndNumberOfAppearances[0], targetIndexAndNumberOfAppearances[1]);
     
     return targetIndexAndNumberOfAppearances;
@@ -55,7 +52,7 @@ NSArray *binarySearchStretch(int inputTarget, NSArray *inputSortedArray) {
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        int target = 10;
+        int target = 8;
         NSArray *sortedArray = @[@5, @7, @8, @8, @10, @10, @11, @11, @11, @14];
         binarySearchStretch(target, sortedArray);
         
